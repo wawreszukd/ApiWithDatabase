@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/lib/pq"
+	"log"
 )
 
 const (
@@ -62,4 +63,13 @@ func (db MyDb) HandleSelect() (error, string) {
 	}
 
 	return nil, Fullout
+}
+func (db MyDb) HandleInsert(firstname, lastname, gender, date string) {
+	sqlStatement := `
+	INSERT INTO person (first_name, last_name, gender, date_of_birth)
+	VALUES ($1, $2, $3, $4)`
+	_, err := db.Db.Exec(sqlStatement, firstname, lastname, gender, date)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
