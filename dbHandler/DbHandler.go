@@ -73,3 +73,18 @@ func (db MyDb) HandleInsert(firstname, lastname, gender, date string) {
 		log.Fatal(err)
 	}
 }
+func (db MyDb) HandleDelete(id int) {
+	sqlStatement := "DELETE FROM person WHERE ID=$1"
+
+	_, err := db.Db.Exec(sqlStatement, id)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+func (db MyDb) HandleEdit(firstname, lastname, gender, date string, id int) {
+	sqlStatement := "UPDATE person SET first_name=$1, last_name=$2,gender=$3,date_of_birth=$4 WHERE id=$5;"
+	_, err := db.Db.Exec(sqlStatement, firstname, lastname, gender, date, id)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
